@@ -1,5 +1,5 @@
 streamlit
-bokeh
+bokeh==2.0
 streamlit-bokeh-events
 scikit-learn
 state 
