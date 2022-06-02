@@ -1,5 +1,4 @@
 streamlit
 bokeh==2.2.0
 streamlit-bokeh-events
-scikit-learn
-state 
+jinja2
