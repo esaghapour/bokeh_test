@@ -31,7 +31,7 @@ source.selected.js_on_change(
 )
 
 event_result = streamlit_bokeh_events(
-    events="event1","event2",
+    events="event1,event2",
     bokeh_plot=plot,
     key="foo",
     debounce_time=1000,
