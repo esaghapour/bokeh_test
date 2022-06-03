@@ -41,9 +41,15 @@ event_result = streamlit_bokeh_events(
 # some event was thrown
 if event_result is not None:
     # TestSelectEvent was thrown
-    if "TestSelectEvent" in event_result:
+    if "event1" in event_result:
         st.subheader("Selected Points' Pandas Stat summary")
-        indices = event_result["TestSelectEvent"].get("indices", [])
+        indices = event_result["event1"].get("indices", [])
+        st.table(df.iloc[indices].describe())
+ if event_result is not None:
+    # TestSelectEvent was thrown
+    if "event2" in event_result:
+        st.subheader("Selected Points' Pandas Stat summary")
+        indices = event_result["event2"].get("indices", [])
         st.table(df.iloc[indices].describe())
 
 st.subheader("Raw Event Data")
