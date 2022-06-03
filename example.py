@@ -45,7 +45,7 @@ if event_result is not None:
         st.subheader("Selected Points' Pandas Stat summary")
         indices = event_result["event1"].get("indices", [])
         st.table(df.iloc[indices].describe())
- if event_result is not None:
+if event_result is not None:
     # TestSelectEvent was thrown
     if "event2" in event_result:
         st.subheader("Selected Points' Pandas Stat summary")
