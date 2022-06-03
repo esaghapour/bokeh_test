@@ -1,46 +1,50 @@
 import streamlit as st
-from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource, CustomJS
-
-# import function
+from bokeh.plotting import figure
+import pandas as pd
+import numpy as np
 from streamlit_bokeh_events import streamlit_bokeh_events
 
-# create plot
-p = figure(tools="lasso_select")
-cds = ColumnDataSource(
-    data={
-        "x": [1, 2, 3, 4],
-        "y": [4, 5, 6, 7],
-    }
-)
-p.circle("x", "y", source=cds)
+@st.cache
+def data():
+    df = pd.DataFrame({"x": np.random.rand(500), "y": np.random.rand(500), "size": np.random.rand(500) * 10})
+    return df
 
-# define events
-cds.selected.js_on_change(
+df = data()
+source = ColumnDataSource(df)
+
+st.subheader("Select Points From Map")
+
+plot = figure( tools="lasso_select,reset", width=250, height=250)
+plot.circle(x="x", y="y", size="size", source=source, alpha=0.6)
+
+source.selected.js_on_change(
     "indices",
     CustomJS(
-        args=dict(source=cds),
+        args=dict(source=source),
         code="""
         document.dispatchEvent(
-            new CustomEvent("YOUR_EVENT_NAME", {detail: {your_data: "goes-here"}})
+            new CustomEvent("TestSelectEvent", {detail: {indices: cb_obj.indices}})
         )
-        """
-    )
+    """,
+    ),
 )
 
-# result will be a dict of {event_name: event.detail}
-# events by default is "", in case of more than one events pass it as a comma separated values
-# event1,event2 
-# debounce is in ms
-# refresh_on_update should be set to False only if we dont want to update datasource at runtime
-# override_height overrides the viewport height
-result = streamlit_bokeh_events(
-        bokeh_plot=p,
-        events="YOUR_EVENT_NAME",
-        key="foo",
-        refresh_on_update=False,
-        override_height=600,
-        debounce_time=500)
+event_result = streamlit_bokeh_events(
+    events="event1","event2"
+    bokeh_plot=plot,
+    key="foo",
+    debounce_time=1000,
+    refresh_on_update=False
+)
 
-# use the result
-st.write(result)
+# some event was thrown
+if event_result is not None:
+    # TestSelectEvent was thrown
+    if "TestSelectEvent" in event_result:
+        st.subheader("Selected Points' Pandas Stat summary")
+        indices = event_result["TestSelectEvent"].get("indices", [])
+        st.table(df.iloc[indices].describe())
+
+st.subheader("Raw Event Data")
+st.write(event_result)
