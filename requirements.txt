@@ -2,3 +2,4 @@ streamlit
 bokeh==2.2.0
 streamlit-bokeh-events
 jinja2==3.0.3
+pycaret=2.3.5
