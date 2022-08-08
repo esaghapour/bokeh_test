@@ -257,5 +257,3 @@ if uploaded_files:
                                   selector=dict(mode='markers'))
                 st.plotly_chart(fig)
                 
-            
-
