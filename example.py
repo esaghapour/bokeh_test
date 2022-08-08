@@ -66,7 +66,7 @@ def plt_boundry_drug(thr,out1,sample_name,style):
 
               )
               ,width=1200, height=500,
-              yaxis_title="IC50 Value",
+              yaxis_title="Log(IC50) Value",
               xaxis_title= "DRUG_NAME",
               legend_title="Sample_ID",
               title='Drug Screenign Result with Min-Max on Threshold Based on Literature Survey'
@@ -93,7 +93,7 @@ def plt_boundry_drug(thr,out1,sample_name,style):
 
                )
                ,width=1200, height=500,
-               yaxis_title="IC50 Value",
+               yaxis_title="Log(IC50) Value",
                xaxis_title= "DRUG_NAME",
                legend_title="Sample_ID",
                title='Drug Screenign Result with Min-Max on Threshold Based on GDSC Data'
@@ -138,8 +138,8 @@ with st.expander('Project Significant'):
 
 with st.expander('Steps to use the tool:'):
      st.markdown('1. Load the CSV file containing the gene expression of patients. ' 
-                 +'The example CSV can be downloaded from [link](https://github.com/u-brite/MedvAIsor/blob/main/App/AllGE_GBM_657.csv. )'
-                 +'The first row in the CSV file is the header, and the rest of the rows are gene expression values. '
+                 +'The example CSV can be downloaded from [link](https://github.com/u-brite/MedvAIsor/blob/main/App/AllGE_GBM_657.csv)'
+                 +'. The first row in the CSV file is the header, and the rest of the rows are gene expression values. '
                  +'The First column is the ID of the sample (Integer value), and the rest columns are 657 genes as described '
                  +'(see the supplementary section of Hackathon Project reports at '
                  +'[link](https://github.com/u-brite/MedvAIsor/blob/main/Project_Report.docx))'
@@ -248,7 +248,7 @@ if uploaded_files:
                 fig = px.scatter(out, x="DRUG_NAME", y="Label", symbol=out['TCGA_DESC'].astype(str), color=out['SAMPLE_ID'].astype(str))
                 fig.update_layout(
                    
-                    yaxis_title="IC50 Value",
+                    yaxis_title="Log(IC50) Value",
                     legend_title="Sample_ID, Cancer Type",
                     width=1000, height=500)
                 fig.update_traces(marker=dict(size=10,
